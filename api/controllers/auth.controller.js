@@ -49,6 +49,7 @@ export const signin = async (req, res, next) => {
     if (!validPassword) {
       return next(errorHandler(400, "Invalid password"));
     }
+    // payload coming from token, in this case, payload is user id
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const { password: userPassword, ...userInfo } = user._doc;
     res
