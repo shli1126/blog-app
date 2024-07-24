@@ -12,6 +12,8 @@ export const verifyToken = (req, res, next) => {
     if (err) {
       return next(errorHandler(401, "Unauthorized"));
     }
+    // user is an object with an id field, which come from
+    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     req.user = user;
     next();
   });
