@@ -117,7 +117,7 @@ export default function DashPosts() {
                         setShowModal(true);
                         setPostIdToDelete(post._id);
                       }}
-                      clasName="font-medium text-red-500 hover:underline cursor-pointer "
+                      clasName="font-medium text-red-500 hover:underline cursor-pointer"
                     >
                       Delete
                     </span>
