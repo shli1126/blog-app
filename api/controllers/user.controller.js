@@ -62,7 +62,7 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) => {
   // req has user field because of req.user = user in verifyToken
-  if (req.user.id != req.params.userId) {
+  if (!req.user.isAdmin && req.user.id != req.params.userId) {
     return next(errorHandler(401, "Unauthorized"));
   }
   try {
@@ -77,7 +77,7 @@ export const signout = (req, res, next) => {
   try {
     res.clearCookie("access_token").status(200).json("Signout successfully");
   } catch (error) {
-    next(error);
+    next(error); 
   }
 };
 

@@ -4,11 +4,14 @@ import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import { useSelector } from "react-redux";
 import DashPosts from "../components/DashPosts";
+import DashUsers from "../components/DashUsers";
 
 export default function Dashboard() {
+
   const theme = useSelector((state) => state.theme.theme);
   const location = useLocation();
   const [tab, setTab] = useState("");
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get("tab");
@@ -16,6 +19,7 @@ export default function Dashboard() {
       setTab(tabFromUrl);
     }
   }, [location.search]);
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
       <div className="md:w-56">
@@ -28,6 +32,7 @@ export default function Dashboard() {
       >
         {tab === "profile" && <DashProfile />}
         {tab === "posts" && <DashPosts />}
+        {tab === "users" && <DashUsers />}
       </div>
     </div>
   );
