@@ -107,6 +107,7 @@ export default function CommentSection({ postId }) {
       });
       if (res.ok) {
         const data = await res.json();
+        //if true, keep in the array, else remove it 
         setComments(comments.filter((comment) => comment._id !== commentId));
       }
     } catch (error) {
