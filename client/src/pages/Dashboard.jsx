@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import DashPosts from "../components/DashPosts";
 import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments";
+import DashboardComp from "../components/DashboardComp";
 
 export default function Dashboard() {
   const theme = useSelector((state) => state.theme.theme);
@@ -34,6 +35,7 @@ export default function Dashboard() {
         {tab === "posts" && <DashPosts />}
         {tab === "users" && <DashUsers />}
         {tab === "comments" && <DashComments />}
+        {tab === "dash" && <DashboardComp />}
       </div>
     </div>
   );
