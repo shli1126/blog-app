@@ -11,10 +11,11 @@ export default function FooteCom() {
               to="/"
               className="self-center whitespace-nowrap text-lg sm:text-xl font-semibold dark:text-white"
             >
-              <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-                Blog
+              <span className="px-2 py-1 ">
+                <div className="px-2 py-1  text-4xl font-bold font-serif tracking-widest text-gray-800">
+                  Photo blog
+                </div>
               </span>
-              Clone
             </Link>
           </div>
           <div className="grid gird-cols-2 gap-3 sm: mt-4 sm:grid-cols-3 sm:gap-6">
