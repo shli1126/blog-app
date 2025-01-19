@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react";
@@ -9,6 +8,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+import { motion } from "framer-motion";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -52,7 +52,14 @@ export default function SignIn() {
         <div className="flex-1">
           <Link to="/" className="font-bold dark:text-white text-4xl">
             <div className="text-4xl font-bold font-serif tracking-widest text-gray-800">
-              Photo blog
+              <motion.h3
+                style={{ overflow: "hidden", whiteSpace: "nowrap" }}
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              >
+                Photo blog
+              </motion.h3>
             </div>
           </Link>
         </div>
@@ -79,7 +86,8 @@ export default function SignIn() {
             <Button
               type="submit"
               disabled={loading}
-              className="bg-gray-100 hover:bg-gray-300 !hover:bg-gray-300 text-black disabled:bg-gray-300"            >
+              className="bg-gray-100 hover:bg-gray-300 !hover:bg-gray-300 text-black disabled:bg-gray-300"
+            >
               {loading ? (
                 <>
                   <Spinner size="sm" />

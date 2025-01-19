@@ -3,7 +3,7 @@ import { Footer } from "flowbite-react";
 
 export default function FooteCom() {
   return (
-    <Footer container className="border border-t-8 border-teal-500">
+    <Footer container className="border border-t-8 border-gray-300">
       <div className="">
         <div className="">
           <div className="">

@@ -1,11 +1,4 @@
-import {
-  Navbar,
-  TextInput,
-  Button,
-  Dropdown,
-  Avatar,
-  DropdownDivider,
-} from "flowbite-react";
+import { Dropdown, Avatar, DropdownDivider } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -58,7 +51,9 @@ export default function Header() {
         <div className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-bold font-serif tracking-widest text-gray-800">
           <Link to="/">Photo blog</Link>
         </div>
-        <div className="font-semibold text-xs hover:underline">CONTACT US</div>
+        <div className="font-semibold text-xs hover:underline">
+          <Link>CONTACT US</Link>
+        </div>
 
         <div className="flex items-center space-x-6 text-sm text-gray-700">
           <div className="flex items-center space-x-4">
@@ -85,6 +80,7 @@ export default function Header() {
               </div>
             ) : (
               <button
+                className="hidden sm:block"
                 onClick={() => {
                   setShowSearchBar(true);
                 }}
@@ -119,18 +115,24 @@ export default function Header() {
                     }
                   >
                     <Dropdown.Header>
-                      <span className="block text-sm">
-                        @{currentUser.username}
-                      </span>
-                      <span className="block text-sm font-medium truncate">
-                        {currentUser.email}
+                      <span className="block text-sm font-mono">
+                        Hi, {currentUser.username}
                       </span>
                     </Dropdown.Header>
-                    <Link to={"/dashboard?tab=profile"}>
-                      <Dropdown.Item>Profile</Dropdown.Item>
-                    </Link>
+
+                    <Dropdown.Item className="z-20">
+                      <Link
+                        to="/dashboard?tab=profile"
+                        className="font-mono font-bold"
+                      >
+                        Profile
+                      </Link>
+                    </Dropdown.Item>
                     <DropdownDivider />
-                    <Dropdown.Item onClick={handleSignout}>
+                    <Dropdown.Item
+                      onClick={handleSignout}
+                      className="z-20 font-mono font-bold"
+                    >
                       Sign Out
                     </Dropdown.Item>
                   </Dropdown>
@@ -142,6 +144,35 @@ export default function Header() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <hr className="bg-gray-300 h-1 border-none" />
+
+      <div className="max-w-2xl mx-auto flex justify-between items-center py-2 px-2 relative h-10">
+        <div>
+          <Link
+            to="/"
+            className="font-mono text-gray-800 hover:text-lg hover:underline"
+          >
+            HOME
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/about"
+            className="font-mono text-gray-800 hover:text-lg hover:underline"
+          >
+            ABOUT
+          </Link>
+        </div>
+        <div>
+          <Link
+            to="/projects"
+            className="font-mono text-gray-800 hover:text-lg hover:underline"
+          >
+            PROJECTS
+          </Link>
         </div>
       </div>
     </header>
