@@ -21,7 +21,7 @@ export const create = async (req, res, next) => {
   });
   try {
     const savedPost = await newPost.save();
-    await redis.del("homepage:posts");
+    // await redis.del("homepage:posts");
     res.status(201).json(savedPost);
   } catch (error) {
     next(error);
@@ -31,10 +31,12 @@ export const create = async (req, res, next) => {
 export const getposts = async (req, res, next) => {
   try {
     const cacheKey = "homepage:posts";
-    const cachedData = await redis.get(cacheKey);
 
-    if (cachedData) {
-      return res.status(200).json(JSON.parse(cachedData));
+    if (!req.query) {
+      const cachedData = await redis.get(cacheKey);
+      if (cachedData) {
+        return res.status(200).json(JSON.parse(cachedData));
+      }
     }
 
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -82,6 +84,9 @@ export const getposts = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
 
 export const deletepost = async (req, res, next) => {
   // only admin can delete the post

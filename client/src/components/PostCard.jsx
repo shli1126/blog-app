@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function PostCard({ post }) {
+  
   return (
     <div className="w-96 h-[450px] bg-white border  shadow-md">
       <div className="h-2/3">

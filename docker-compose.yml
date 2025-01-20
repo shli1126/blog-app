@@ -1,37 +1,41 @@
-version: "3.8"
+version: "3.9" # Specify the Docker Compose version
+
 services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "4000:4000" # Map backend port 4000 to host
+    depends_on:
+      - redis # Ensure Redis starts before the backend
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    networks:
+      - app-network
 
   frontend:
     build:
       context: ./client
       dockerfile: Dockerfile
+    container_name: frontend
     ports:
-      - "5173:5173"
-    environment:
-      - VITE_API_BASE_URL=http://app:4000
+      - "5173:5173" # Map frontend port 5173 to host
     depends_on:
-      - app
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000" # Map container port 4000 to host port 4000
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    depends_on:
-      - redis
+      - backend # Ensure backend starts before frontend
+    networks:
+      - app-network
 
   redis:
-    image: redis:latest
+    image: redis:6.2 # Use the official Redis image
     container_name: redis
     ports:
-      - "6379:6379" # Map Redis default port
-    command: ["redis-server", "--appendonly", "yes"] # Persist data to disk
-    volumes:
-      - redis_data:/data
+      - "6379:6379" # Map Redis port 6379 to host
+    networks:
+      - app-network
 
-volumes:
-  redis_data:
+networks:
+  app-network:
+    driver: bridge
