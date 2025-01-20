@@ -4,13 +4,11 @@ import dotenv from "dotenv";
 
 
 dotenv.config({ path: "../../.env" });
-const dbName = "test"; // Replace with your database name
-const collectionName = "posts"; // Replace with your collection name
+const dbName = "test"; 
+const collectionName = "posts"; 
 
 async function insertData() {
-    console.log("Current Working Directory:", process.cwd());
-    console.log(process.env.MONGO);
-    
+
   const client = new MongoClient(process.env.MONGO);
 
   try {
@@ -18,7 +16,6 @@ async function insertData() {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    // Generate a large number of objects
     const data = [];
     for (let i = 0; i < 1000; i++) {
       data.push({

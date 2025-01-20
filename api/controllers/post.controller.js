@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
+import redis from "../redis/redis.js";
 
 export const create = async (req, res, next) => {
   if (!req.user.isAdmin) {
@@ -20,6 +21,7 @@ export const create = async (req, res, next) => {
   });
   try {
     const savedPost = await newPost.save();
+    await redis.del("homepage:posts");
     res.status(201).json(savedPost);
   } catch (error) {
     next(error);
@@ -28,8 +30,15 @@ export const create = async (req, res, next) => {
 
 export const getposts = async (req, res, next) => {
   try {
+    const cacheKey = "homepage:posts";
+    const cachedData = await redis.get(cacheKey);
+
+    if (cachedData) {
+      return res.status(200).json(JSON.parse(cachedData));
+    }
+
     const startIndex = parseInt(req.query.startIndex) || 0;
-    const limit = parseInt(req.query.limit) || 12;
+    const limit = parseInt(req.query.limit) || 24;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
     const posts = await Post.find({
       ...(req.query.userId && { userId: req.query.userId }),
@@ -60,11 +69,15 @@ export const getposts = async (req, res, next) => {
       createdAt: { $gte: oneMonthAgo },
     });
 
-    res.status(200).json({
+    const responseData = {
       posts,
       totalPosts,
       lastMonthPosts,
-    });
+    };
+
+    await redis.set(cacheKey, JSON.stringify(responseData), "EX", 300);
+
+    res.status(200).json(responseData);
   } catch (error) {
     next(error);
   }
